@@ -1,0 +1,151 @@
+{
+  "name": "RSS-Monitor",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1792,
+        -800
+      ],
+      "id": "d021772b-4a86-4c02-9297-70b6f127e5f7",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://rss.metalgeekhub.online/api/query.php?user=admin&t=26J1zcV9XCUPk99Q1QGhTV&f=rss",
+        "options": {
+          "customFields": "",
+          "ignoreSSL": false
+        }
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        -1472,
+        -688
+      ],
+      "id": "33d6516d-d43e-4335-ba1e-ef07da5ac171",
+      "name": "RSS Read",
+      "notesInFlow": false
+    },
+    {
+      "parameters": {
+        "maxItems": 10
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -1200,
+        -688
+      ],
+      "id": "fb66ec77-c29d-4adf-af0c-f9aecca6ea7b",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "authentication": "webhook",
+        "content": "=Best Tech News for today:\n\n {{ $json.title }}\n{{ $json.creator }}\n{{ $json.pubDate.toDateTime().toFormat('ccc, dd LLL yyyy HH:mm:ss') }}\n{{ $json.link }}",
+        "options": {},
+        "embeds": {
+          "values": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        -944,
+        -688
+      ],
+      "id": "c5ac8581-b419-44af-ae03-9f6fca1284e4",
+      "name": "Discord",
+      "webhookId": "26dc8b2a-43e9-4430-a5d5-2f296e528e14",
+      "credentials": {
+        "discordWebhookApi": {
+          "id": "OFUkQEjztoNXDx4Z",
+          "name": "Discord Webhook account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1792,
+        -592
+      ],
+      "id": "fed3e91c-5f53-409c-845d-59433ce2bd55",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "05f39f50-a28c-4e3a-ae92-c9cd5e658bf1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "af5c1269f140bd973250f2fb992116c456a46989acf1a0811c336ac2e022d55e"
+  },
+  "id": "GY1lVt2D6EzdyhvS",
+  "tags": []
+}
