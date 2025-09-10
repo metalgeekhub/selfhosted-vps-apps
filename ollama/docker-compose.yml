@@ -32,6 +32,8 @@ services:
       - stable-diffusion-webui
     extra_hosts:
       - host.docker.internal:host-gateway
+    networks:
+      - ai_net
 
 # -----------------------------------------------------------------------------------
 # Optional: Ollama Service
@@ -42,6 +44,8 @@ services:
     restart: unless-stopped
     volumes:
       - ollama:/root/.ollama
+    networks:
+      - ai_net
 #     # --------------------------------------------------------------------------
 #     # Optional: GPU Support (Uncomment the following lines to enable)
 #     # deploy:
@@ -74,8 +78,14 @@ services:
     volumes:
       # You might need to adjust this volume based on your setup.
       - ./sd-empty.pt:/empty.pt
+    networks:
+      - ai_net
 # -----------------------------------------------------------------------------------
 
 volumes:
   open-webui: {}
   ollama: {}
+
+networks:
+  ai_net:
+    external: true
