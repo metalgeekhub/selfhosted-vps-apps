@@ -13,7 +13,7 @@ services:
       - loki-data:/loki
     restart: unless-stopped
     networks:
-      - loki
+      - monitoring
 
   promtail:
     image: grafana/promtail:latest
@@ -26,7 +26,7 @@ services:
     depends_on:
       - loki
     networks:
-      - loki
+      - monitoring
 
   grafana:
     environment:
@@ -60,7 +60,11 @@ services:
       - grafana-data:/var/lib/grafana
     restart: unless-stopped
     networks:
-      - loki
+      - monitoring
+
+networks:
+  affine_net:
+    monitoring: true
 
 volumes:
   loki-data:
