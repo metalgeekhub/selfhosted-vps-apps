@@ -54,7 +54,7 @@ services:
         /run.sh
     image: grafana/grafana:latest
     ports:
-      - "3090:3311"
+      - "3311:3311"
     volumes:
       - grafana-data:/var/lib/grafana
     restart: unless-stopped
