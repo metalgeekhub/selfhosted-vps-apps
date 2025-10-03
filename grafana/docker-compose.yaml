@@ -63,8 +63,8 @@ services:
       - monitoring
 
 networks:
-  affine_net:
-    monitoring: true
+  monitoring:
+    external: true
 
 volumes:
   loki-data:
