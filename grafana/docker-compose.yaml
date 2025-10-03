@@ -30,7 +30,6 @@ services:
       - GF_SERVER_HTTP_PORT=3311           # Change internal port
       - GF_SERVER_HTTP_ADDR=0.0.0.0  
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
-      - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting,alertingQueryAndExpressionsStepMode
     entrypoint:
