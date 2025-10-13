@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  demo-db:
+    image: postgres:18.0
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: petclinic
+    ports:
+      - "5432:5432"
+    volumes:
+      - demo-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  petclinic:
+    image: dsyer/petclinic
+    environment:
+      SPRING_PROFILES_ACTIVE: postgres
+      SERVICE_BINDING_ROOT: /bindings
+      SPRING_APPLICATION_JSON: |
+        {
+          "management.endpoint.health.probes.add-additional-paths": true
+        }
+      SPRING_DATASOURCE_URL: jdbc:postgresql://demo-db:5432/petclinic
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: pass
+    depends_on:
+      demo-db:
+        condition: service_healthy
+    ports:
+      - "80:8080"
+    volumes:
+      - petclinic-bindings:/bindings
+
+volumes:
+  demo-db-data:
+  petclinic-bindings:
