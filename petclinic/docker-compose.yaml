@@ -33,7 +33,7 @@ services:
       demo-db:
         condition: service_healthy
     ports:
-      - "80:8080"
+      - "8040:8080"
     volumes:
       - petclinic-bindings:/bindings
 
