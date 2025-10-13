@@ -16,6 +16,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - petclinic_net
 
   petclinic:
     image: dsyer/petclinic
@@ -36,7 +38,13 @@ services:
       - "8040:8080"
     volumes:
       - petclinic-bindings:/bindings
+    networks:
+      - petclinic_net
 
 volumes:
   demo-db-data:
   petclinic-bindings:
+
+networks:
+  petclinic_net:
+    external: true
