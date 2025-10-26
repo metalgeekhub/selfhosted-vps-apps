@@ -14,12 +14,12 @@ services:
       - UMASK=0022  # Set your file permissions manually
     networks:
       - kuma_network  # add your own custom network config
-    healthcheck:
-      test: ["CMD", "curl", "-f", "${HOST_URL}"]
-      interval: 30s
-      retries: 3
-      start_period: 10s
-      timeout: 5s
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "${HOST_URL}"]
+    #   interval: 30s
+    #   retries: 3
+    #   start_period: 10s
+    #   timeout: 5s
     logging:
       driver: "json-file"
       options:
