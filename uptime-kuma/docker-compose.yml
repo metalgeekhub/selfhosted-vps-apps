@@ -15,7 +15,7 @@ services:
     networks:
       - kuma_network  # add your own custom network config
     healthcheck:
-      test: ["CMD", "curl", "-f", ${HOST_URL}]
+      test: ["CMD", "curl", "-f", "${HOST_URL}"]
       interval: 30s
       retries: 3
       start_period: 10s
